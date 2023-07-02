@@ -1,27 +1,27 @@
 const { assert } = require("chai");
 
+let BUG_ID = "";
+// Для тестирования с багом можно разкомментировать строку ниже
+//BUG_ID = "/?bug_id=7";
+
 describe("Cart test", async function () {
-    it("Тест Cart BUG_ID=8 & 10", async function ({ browser }) {
+    it("Тест Cart BUG_ID=7 , 8 , 10", async function ({ browser }) {
         const puppeteer = await browser.getPuppeteer();
         const [page] = await puppeteer.pages();
-
-        let BUG_ID = "";
-        // Для тестирования с багом разкомментировать строку ниже
-        //BUG_ID = "/?bug_id=8";
 
         await browser.url("http://localhost:3000/hw/store" + BUG_ID);
 
         await page.goto("http://localhost:3000/hw/store/catalog" + BUG_ID);
-  
+
         const searchResultSelector = ".ProductItem-DetailsLink";
-        await page.waitForSelector(searchResultSelector);
+        await page.waitForSelector(searchResultSelector, { timeout: 1000 });
         await page.click(searchResultSelector);
 
         const addToCartSelector = ".ProductDetails-AddToCart";
-        await page.waitForSelector(addToCartSelector);
+        await page.waitForSelector(addToCartSelector, { timeout: 1000 });
         await page.click(addToCartSelector);
 
-        await page.waitForSelector(".text-success");
+        await page.waitForSelector(".text-success", { timeout: 1000 });
 
         await page.goto(" http://localhost:3000/hw/store/cart" + BUG_ID);
 
@@ -50,8 +50,12 @@ describe("Cart test", async function () {
         const succesSelector = ".Cart-SuccessMessage";
         await page.waitForSelector(succesSelector, { timeout: 1000 });
 
-        await browser.assertView("correct_cart_well_done", ".Cart-SuccessMessage", {
-            ignoreElements: [".Cart-Number"],
-        });
+        await browser.assertView(
+            "correct_cart_well_done",
+            ".Cart-SuccessMessage",
+            {
+                ignoreElements: [".Cart-Number"],
+            }
+        );
     });
 });

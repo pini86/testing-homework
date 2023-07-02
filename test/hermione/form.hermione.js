@@ -1,13 +1,13 @@
 const { assert } = require("chai");
 
+let BUG_ID = "";
+// Для тестирования с багом можно разкомментировать строку ниже
+// BUG_ID = "/?bug_id=10";
+
 describe("Form test", async function () {
     it("Тест Form BUG_ID=10", async function ({ browser }) {
         const puppeteer = await browser.getPuppeteer();
         const [page] = await puppeteer.pages();
-
-        let BUG_ID = "";
-        // Для тестирования с багом разкомментировать строку ниже
-        // BUG_ID = "/?bug_id=10";
 
         await browser.url("http://localhost:3000/hw/store" + BUG_ID);
 

@@ -2,11 +2,11 @@ const { assert } = require("chai");
 
 let BUG_ID = "";
 
-// Для тестирования с багом разкомментировать строку ниже
+// Для тестирования с багом можно разкомментировать строку ниже
 // BUG_ID = "/?bug_id=9";
 
 describe("Product details test", async function () {
-    it("Тест Product details content", async function ({ browser }) {
+    it("Тест на странице с подробной информацией отображаются: название товара, его описание, цена, цвет, материал и кнопка * * `добавить в корзину`", async function ({ browser }) {
         const puppeteer = await browser.getPuppeteer();
         const [page] = await puppeteer.pages();
 
